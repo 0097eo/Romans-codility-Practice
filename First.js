@@ -11,3 +11,32 @@
 // Write an efficient algorithm for the following assumptions:
 
 // N is an integer within the range [1..200,000].
+
+
+function solution(N) {
+    let result = '';
+    // Determine how many times each letter should appear
+    const appearances = Math.ceil(N / 26);
+
+    // Build the initial sequence of unique letters
+    for (let i = 0; i < 26 && result.length < N; i++) {
+        result += String.fromCharCode('a'.charCodeAt(0) + i).repeat(appearances);
+    }
+
+    // If the result is too long, trim it to N
+    if (result.length > N) {
+        result = result.substring(0, N);
+    } else {
+        // Otherwise, repeat the sequence until we reach N
+        while (result.length < N) {
+            result += result.substring(0, N - result.length);
+        }
+    }
+
+return result;
+}
+
+// Test cases
+console.log(solution(3)); // Should print a string like "abc"
+console.log(solution(5)); // Should print a string like "abcde"
+console.log(solution(30)); // Should print a string like "aabbccddeeffgghhiijjkkllmmnnooop"

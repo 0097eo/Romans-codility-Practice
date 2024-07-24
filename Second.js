@@ -22,3 +22,43 @@
 
 // N is an integer within the range [1..100,000];
 // each element of array A is an integer within the range [1..100,000].
+
+function solution(A) {
+    // Sort guests by descending preference
+    A.sort((a, b) => b - a);
+
+    // Create a data structure to represent rooms and their current size
+    const rooms = [];
+
+
+    // Iterate over each guest's preference in the sorted array.
+    for (const guestPreference of A) {
+        // Flag to indicate whether a suitable room has been found for the current guest.
+        let foundRoom = false;
+
+         // Attempt to place the guest in an existing room where the current occupancy does not exceed the guest's preference 
+        for (let i = 0; i < rooms.length; i++) {
+            if (rooms[i] < guestPreference) {
+                rooms[i]++;
+                foundRoom = true;
+                break;
+            }
+        }
+
+        // If no room is found, create a new room
+        if (!foundRoom) {
+            rooms.push(1);
+        }
+    }
+
+    return rooms.length;
+}
+
+
+
+// Test cases
+console.log(solution([1, 1, 1, 1, 1])); // Should return 5
+console.log(solution([2, 1, 4])); // Should return 2
+console.log(solution([2, 7, 2, 9, 8])); // Should return 2
+console.log(solution([7, 3, 1, 1, 4, 5, 4, 9])); // Should return 4
+
