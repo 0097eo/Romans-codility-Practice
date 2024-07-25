@@ -20,3 +20,25 @@
 
 // N is an integer within the range [4..100];
 // string S is made only of digits (0−9).
+
+function solution(S){
+    let maxSum = 0;
+    let n = S.length;
+
+    for (let i = 0; i < n - 3; i++) {
+        for (let j = i + 2; j < n -1; j++) {
+            let num1 = parseInt(S.slice(i, i + 2));
+            let num2 = parseInt(S.slice(j, j + 2));
+            maxSum = Math.max(maxSum, num1 + num2);
+        }
+    }
+
+    return maxSum;
+}
+
+// Test cases
+console.log(solution("43798"));   // Should return 141
+console.log(solution("00101"));   // Should return 10
+console.log(solution("0332331")); // Should return 66
+console.log(solution("00331"));   // Should return 34
+
