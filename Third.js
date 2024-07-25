@@ -24,3 +24,38 @@
 
 // N is an integer within the range [2..200,000];
 // each element of array blocks is an integer within the range [1..1,000,000,000].
+
+function solution(blocks) {
+    const N = blocks.length;
+    let maxDistance = 1; // Minimum distance is always 1
+    
+    // Arrays to store the maximum jump distance in each direction
+    const leftMax = new Array(N).fill(0);
+    const rightMax = new Array(N).fill(0);
+    
+    // Calculate maximum jumps to the left
+    for (let i = 1; i < N; i++) {
+        if (blocks[i] <= blocks[i-1]) {
+            leftMax[i] = leftMax[i-1] + 1;
+        }
+    }
+    
+    // Calculate maximum jumps to the right
+    for (let i = N-2; i >= 0; i--) {
+        if (blocks[i] <= blocks[i+1]) {
+            rightMax[i] = rightMax[i+1] + 1;
+        }
+    }
+    
+    // Find the maximum total distance
+    for (let i = 0; i < N; i++) {
+        maxDistance = Math.max(maxDistance, leftMax[i] + rightMax[i] + 1);
+    }
+    
+    return maxDistance;
+}
+
+// Test cases
+console.log(solution([2, 6, 8, 5])); // Should return 3
+console.log(solution([1, 5, 5, 2, 6])); // Should return 4
+console.log(solution([1, 1])); // Should return 2
